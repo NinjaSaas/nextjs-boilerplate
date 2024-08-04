@@ -1,0 +1,63 @@
+name: Check Project Health
+
+on:
+  push:
+    branches:
+      - main
+      - staging
+      - develop
+  pull_request:
+  workflow_dispatch:
+
+jobs:
+  check:
+    name: Check
+    runs-on: ubuntu-latest
+    env:
+      DATABASE_URL: ${{ secrets.DATABASE_URL }}
+      NEXT_PUBLIC_APP_URL: ${{ secrets.NEXT_PUBLIC_APP_URL }}
+      ANALYZE: ${{ secrets.ANALYZE }}
+      NEXT_PUBLIC_VERCEL_URL: ${{ secrets.NEXT_PUBLIC_VERCEL_URL }}
+      LOGLIB_API_KEY: ${{ secrets.LOGLIB_API_KEY }}
+      LOGLIB_SITE_ID: ${{ secrets.LOGLIB_SITE_ID }}
+      LINKEDIN_ID: ${{ secrets.LINKEDIN_ID }}
+      LINKEDIN_SECRET: ${{ secrets.LINKEDIN_SECRET }}
+      FACEBOOK_ID: ${{ secrets.FACEBOOK_ID }}
+      FACEBOOK_SECRET: ${{ secrets.FACEBOOK_SECRET }}
+      SECRET_KEY: ${{ secrets.SECRET_KEY }}
+      NEXT_PUBLIC_SUPABASE_URL: ${{ secrets.NEXT_PUBLIC_SUPABASE_URL }}
+      NEXT_PUBLIC_SUPABASE_ANON_KEY: ${{ secrets.NEXT_PUBLIC_SUPABASE_ANON_KEY }}
+      NEXT_PUBLIC_MAILCHIMP_URL: ${{ secrets.NEXT_PUBLIC_MAILCHIMP_URL }}
+      NEXT_PUBLIC_CLOUDINARY_CLOUD_NAME: ${{ secrets.NEXT_PUBLIC_CLOUDINARY_CLOUD_NAME }}
+      CLOUDINARY_API_KEY: ${{ secrets.CLOUDINARY_API_KEY }}
+      CLOUDINARY_API_SECRET: ${{ secrets.CLOUDINARY_API_SECRET }}
+
+
+    steps:
+      - uses: pnpm/action-setup@v4
+        with:
+          version: 8
+      - uses: actions/checkout@v3
+      - run: echo "node_version=$(cat .github/nodejs.version)" >> $GITHUB_ENV
+      - name: "use node ${{ env.node_version }}"
+        uses: actions/setup-node@v3
+        with:
+          node-version: "${{ env.node_version }}"
+      - name: Install dependencies
+        run: pnpm install
+      - name: Lint check
+        run: pnpm lint
+      - name: Format check
+        run: pnpm prettier
+      - name: Unit & Integration tests
+        run: pnpm test
+
+      - name: Install Playwright Browsers
+        run: pnpm exec playwright install
+      - name: Smoke & Acceptance tests
+        run: |
+          pnpm build-storybook --quiet
+          pnpm add -D concurrently@8.2.1 wait-on http-server
+          npx concurrently -k -s first -n "SB,TEST" -c "magenta,blue" \
+            "npx http-server storybook-static --port 6006 --silent" \
+            "npx wait-on tcp:127.0.0.1:6006 && pnpm test-storybook"

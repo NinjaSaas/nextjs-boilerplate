@@ -1,0 +1,70 @@
+// Prisma schema file for ninjasaas - Online therapy platform for Morocco
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider  = "postgresql" // Database provider
+  url       = env("DATABASE_URL") // Connection string for the database
+  directUrl = env("DIRECT_URL")
+}
+
+
+model User {
+  id                           String         @id @default(cuid())
+  name                         String?
+  age                          String?
+  gender                       String?
+  occupation                   String?
+  relationship                 String?
+  education                    String?
+  phone                        String?
+  preferredCommunicationMethod String[]
+  preferredLanguage            String?
+  email                        String?        @unique
+  emailVerified                DateTime?
+  image                        String?        @default("https://res.cloudinary.com/dqo2aggjs/image/upload/v1696596420/default-avatar_kqqse2.jpg")
+  userRole                     UserRole       @default(User)
+  notifications                Notification[]
+
+
+  @@index([email])
+  @@index([userRole])
+}
+
+enum UserRole {
+  Owner
+  Admin
+  User
+  Guest
+}
+
+
+enum Language {
+  ENGLISH
+  FRENCH
+  ARABIC
+  DARIJA
+}
+
+model Notification {
+  id        String           @id @default(cuid())
+  content   String
+  type      NotificationType
+  timestamp DateTime
+  isRead    Boolean
+  userId    String
+
+  user User @relation(fields: [userId], references: [id], onDelete: Cascade)
+
+  @@index([userId])
+  @@index([timestamp])
+  @@index([isRead])
+}
+
+enum NotificationType {
+  APPOINTMENT
+  PAYMENT
+  SYSTEM
+}

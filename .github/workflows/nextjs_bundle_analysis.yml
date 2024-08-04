@@ -1,0 +1,150 @@
+name: Next.js Bundle Analysis
+
+permissions:
+  contents: write
+  pull-requests: write
+  actions: read  # Added permission to read actions
+
+on:
+  push:
+    branches: [main, staging, develop]
+  pull_request:
+    branches: [main, staging, develop]
+  workflow_dispatch:
+
+defaults:
+  run:
+    working-directory: ./
+
+jobs:
+  analyze:
+    runs-on: ubuntu-latest
+    env:
+      DATABASE_URL: ${{ secrets.DATABASE_URL }}
+      NEXT_PUBLIC_APP_URL: ${{ secrets.NEXT_PUBLIC_APP_URL }}
+      ANALYZE: ${{ secrets.ANALYZE }}
+      NEXT_PUBLIC_VERCEL_URL: ${{ secrets.NEXT_PUBLIC_VERCEL_URL }}
+      LOGLIB_API_KEY: ${{ secrets.LOGLIB_API_KEY }}
+      LOGLIB_SITE_ID: ${{ secrets.LOGLIB_SITE_ID }}
+      LINKEDIN_ID: ${{ secrets.LINKEDIN_ID }}
+      LINKEDIN_SECRET: ${{ secrets.LINKEDIN_SECRET }}
+      FACEBOOK_ID: ${{ secrets.FACEBOOK_ID }}
+      FACEBOOK_SECRET: ${{ secrets.FACEBOOK_SECRET }}
+      GOOGLE_ID: ${{ secrets.GOOGLE_ID }}
+      GOOGLE_SECRET: ${{ secrets.GOOGLE_SECRET }}
+      SECRET_KEY: ${{ secrets.SECRET_KEY }}
+      NEXT_PUBLIC_SUPABASE_URL: ${{ secrets.NEXT_PUBLIC_SUPABASE_URL }}
+      NEXT_PUBLIC_SUPABASE_ANON_KEY: ${{ secrets.NEXT_PUBLIC_SUPABASE_ANON_KEY }}
+      NEXT_PUBLIC_MAILCHIMP_URL: ${{ secrets.NEXT_PUBLIC_MAILCHIMP_URL }}
+      NEXT_PUBLIC_CLOUDINARY_CLOUD_NAME: ${{ secrets.NEXT_PUBLIC_CLOUDINARY_CLOUD_NAME }}
+      CLOUDINARY_API_KEY: ${{ secrets.CLOUDINARY_API_KEY }}
+      CLOUDINARY_API_SECRET: ${{ secrets.CLOUDINARY_API_SECRET }}
+
+    steps:
+      - uses: actions/checkout@v3
+
+      - uses: pnpm/action-setup@v4
+        with:
+          version: 8
+
+      - name: Set up node
+        uses: actions/setup-node@v3
+        with:
+          node-version: "18.x"
+          cache: 'pnpm'
+
+      - name: Install dependencies
+        run: pnpm install --frozen-lockfile
+
+      - name: Restore next build
+        uses: actions/cache@v3
+        id: restore-build-cache
+        with:
+          path: .next/cache
+          key: ${{ runner.os }}-nextjs-${{ hashFiles('**/pnpm-lock.yaml') }}-${{ hashFiles('**.[jt]s', '**.[jt]sx') }}
+          restore-keys: |
+            ${{ runner.os }}-nextjs-${{ hashFiles('**/pnpm-lock.yaml') }}-
+
+      - name: Build next.js app
+        env:
+          SKIP_BUILD_PRODUCT_REDIRECTS: 1
+        run: pnpm build
+
+      - name: Analyze bundle
+        run: npx -p nextjs-bundle-analysis report
+
+      - name: Upload bundle
+        uses: actions/upload-artifact@v3
+        with:
+          name: bundle
+          path: .next/analyze/__bundle_analysis.json
+
+      - name: Download base branch bundle stats
+        uses: dawidd6/action-download-artifact@v6
+        if: github.event_name == 'pull_request'
+        with:
+          github_token: ${{ secrets.GITHUB_TOKEN }}
+          workflow: nextjs_bundle_analysis.yml
+          name: bundle
+          path: .next/analyze/base
+          branch: ${{ github.event.pull_request.base.ref }}
+          check_artifacts: true
+          if_no_artifact_found: warn
+      - name: Compare with base branch bundle
+        if: success() && github.event.number
+        run: |
+          if [ -d ".next/analyze/base" ]; then
+            ls -laR .next/analyze/base
+            if [ -f ".next/analyze/base/__bundle_analysis.json" ]; then
+              # Ensure the directory exists
+              mkdir -p .next/analyze/base/bundle
+              # Copy the file to the expected location
+              cp .next/analyze/base/__bundle_analysis.json .next/analyze/base/bundle/__bundle_analysis.json
+              # Run the comparison
+              npx -p nextjs-bundle-analysis compare || echo "Comparison failed, but continuing..."
+            else
+              echo "Bundle analysis file not found in expected location. Skipping comparison."
+              echo "<!-- __NEXTJS_BUNDLE -->\nNo comparison available: Bundle analysis file not found." > .next/analyze/__bundle_analysis_comment.txt
+            fi
+          else
+            echo "Base analysis directory does not exist. Skipping comparison."
+            echo "<!-- __NEXTJS_BUNDLE -->\nNo comparison available: Base analysis directory not found." > .next/analyze/__bundle_analysis_comment.txt
+          fi
+      - name: Get comment body
+        id: get-comment-body
+        if: success() && github.event.number
+        uses: actions/github-script@v6
+        with:
+              result-encoding: string
+              script: |
+                const fs = require('fs');
+                const path = '.next/analyze/__bundle_analysis_comment.txt';
+                let comment = 'No bundle analysis available.';
+                if (fs.existsSync(path)) {
+                  comment = fs.readFileSync(path, 'utf8');
+                }
+                core.setOutput('body', comment);
+
+      - name: Find Comment
+        uses: peter-evans/find-comment@v2
+        if: success() && github.event.number
+        id: fc
+        with:
+          issue-number: ${{ github.event.number }}
+          body-includes: "<!-- __NEXTJS_BUNDLE -->"
+
+      - name: Create Comment
+        uses: peter-evans/create-or-update-comment@v3
+        if: success() && github.event.number && steps.fc.outputs.comment-id == 0
+        with:
+          issue-number: ${{ github.event.number }}
+          body: ${{ steps.get-comment-body.outputs.body }}
+
+      - name: Update Comment
+        uses: peter-evans/create-or-update-comment@v3
+        if: success() && github.event.number && steps.fc.outputs.comment-id != 0
+        with:
+          issue-number: ${{ github.event.number }}
+          body: ${{ steps.get-comment-body.outputs.body }}
+          comment-id: ${{ steps.fc.outputs.comment-id }}
+          edit-mode: replace

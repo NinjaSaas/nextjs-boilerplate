@@ -1,0 +1,63 @@
+/* General container */
+.day-part,
+.date-part {
+  @apply font-body text-sm font-bold text-primary-6000 md:text-base;
+}
+
+.date-part {
+  @apply text-lg md:text-2xl;
+}
+
+.fc-scrollgrid {
+  @apply border-neutral-200 #{!important};
+}
+.fc-event {
+  @apply rounded-xl md:rounded;
+}
+.fc-timegrid-event-harness {
+  @apply -mr-1;
+}
+
+.fc-event-main {
+  @apply cursor-pointer;
+}
+.fc-event-main-frame {
+  @apply flex-col-reverse #{!important};
+}
+
+.fc-t__oolbar-chunk {
+  @apply relative left-[-4rem] top-12 z-10 w-[calc(100%+9.25rem)] justify-between md:w-[calc(100%+6.25rem)];
+}
+
+.fc tbody td,
+.fc-timegrid-slot {
+  @apply border-neutral-200  #{!important};
+}
+
+.fc-today-button,
+.fc-today-button:disabled {
+  @apply rounded border-primary-400 bg-primary-400 font-body  #{!important};
+}
+.fc-icon-chevron-right:before,
+.fc-icon-chevron-left:before {
+  @apply text-primary-6000;
+}
+
+.fc-next-button,
+.fc-prev-button {
+  @apply flex items-baseline px-1 pb-3 text-base leading-none #{!important};
+}
+.fc-icon-chevron-right,
+.fc-icon-chevron-left {
+  @apply pb-6 text-2xl #{!important};
+}
+.fc-icon-chevron-left {
+  @apply ml-4 md:ml-6;
+}
+
+.fc-toolbar-chunk {
+  @apply md:-ml-8;
+}
+.fc-toolbar-title {
+  @apply m-0 text-sm md:text-base  #{!important};
+}

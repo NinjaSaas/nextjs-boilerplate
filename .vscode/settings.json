@@ -1,0 +1,84 @@
+{
+  // TypeScript Config
+  "typescript.tsdk": "node_modules/typescript/lib",
+  "typescript.enablePromptUseWorkspaceTsdk": true,
+
+  // TailwindCSS Config
+  "tailwindCSS.experimental.classRegex": [
+    ["cva\\(([^)]*)\\)", "[\"'`]([^\"'`]*).*?[\"'`]"],
+    ["cn\\(([^)]*)\\)", "[\"'`]([^\"'`]*).*?[\"'`]"],
+    ["tw=\"([^\"]*)\""]
+  ],
+  "tailwindCSS.includeLanguages": { "plaintext": "html" },
+
+  // i18n-ally Config
+  "i18n-ally.keystyle": "nested",
+  "i18n-ally.localesPaths": ["src/i18n/messages"],
+
+  // Files Config
+  "files.trimTrailingWhitespace": true,
+  "files.insertFinalNewline": true,
+  "files.associations": {
+    "*.ignore": "plaintext",
+    "*.tson": "typescript",
+    "*.txt": "plaintext"
+  },
+
+  // VSCode Config
+  "editor.tabSize": 2,
+  "editor.codeActionsOnSave": {
+    "source.fixAll": "never"
+  },
+  "editor.formatOnSave": true,
+  "editor.unicodeHighlight.allowedCharacters": {
+    "a": true,
+    "а": true,
+    "А": true,
+    "б": true,
+    "В": true,
+    "е": true,
+    "Е": true,
+    "з": true,
+    "З": true,
+    "і": true,
+    "І": true,
+    "н": true,
+    "Н": true,
+    "о": true,
+    "р": true,
+    "Р": true,
+    "с": true,
+    "у": true,
+    "У": true
+  },
+
+  // ESLint Config
+  "eslint.format.enable": true,
+  "eslint.validate": [
+    "javascript",
+    "javascriptreact",
+    "typescript",
+    "typescriptreact"
+  ],
+
+  // Filetype-specific Config
+  "[javascript]": {
+    "editor.defaultFormatter": "esbenp.prettier-vscode"
+  },
+  "[javascriptreact]": {
+    "editor.defaultFormatter": "esbenp.prettier-vscode"
+  },
+  "[typescript]": {
+    "editor.defaultFormatter": "esbenp.prettier-vscode"
+  },
+  "[typescriptreact]": {
+    "editor.defaultFormatter": "esbenp.prettier-vscode"
+  },
+  "markdownlint.config": {
+    "MD033": {
+      "allowed_elements": ["img", "p", "a"]
+    }
+  },
+  "i18n-ally.sourceLanguage": "en",
+  "cSpell.words": ["ninjasaas", "supabase"]
+}
