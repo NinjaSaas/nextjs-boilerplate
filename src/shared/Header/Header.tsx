@@ -7,7 +7,6 @@ export interface HeaderProps {
   type?: "moderated" | "main" | "dashboard";
   className?: string;
 
-  hasSurvey?: boolean;
   isLoading?: boolean;
   user: AppUser;
 }
@@ -16,7 +15,6 @@ const Header: FC<HeaderProps> = ({
   className = "",
   type = "main",
   isLoading,
-  hasSurvey,
   user,
 }) => {
   return (
@@ -27,7 +25,6 @@ const Header: FC<HeaderProps> = ({
         type={type}
         isLoading={isLoading}
         user={user}
-        hasSurvey={hasSurvey}
       />
     </header>
   );

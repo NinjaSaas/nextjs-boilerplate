@@ -30,7 +30,7 @@ function PageHome() {
                 Wellness Awaits: Your Journey to Mental Health Begins Soon!
               </h3>
               <h1 className="font-display text-4xl lg:text-6xl text-primary-900 font-medium font-test">
-                Elevate Your Well being with Online Therapy
+                Next.js Boilerplate
               </h1>
               <p className="text-lg  tracking-wide mx-12 lg:max-w-3xl lg:mx-auto text-neutral-800">
                 Embark on a path to mental well-being with ninjasaas.

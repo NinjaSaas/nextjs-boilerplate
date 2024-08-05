@@ -1,19 +1,14 @@
 import { ADMIN_ROLE } from "@/app";
-import { AppUser, CalendarEvent, CurrentPsyCard } from "@/types";
+import { AppUser } from "@/types";
 import { create } from "zustand";
 import { createJSONStorage, persist } from "zustand/middleware";
 
 interface AppState {
   currentUser: AppUser | null;
-  activeScheduledSession: CalendarEvent | null;
-  currentPsyCard: CurrentPsyCard | null;
 }
 
 interface AppActions {
   setCurrentUser: (user: AppUser | null) => void;
-  updateCurrentUser: (updates: Partial<AppUser>) => void;
-  setActiveScheduledSession: (session: CalendarEvent | null) => void;
-  setCurrentPsyCard: (currentPsyCard: CurrentPsyCard | null) => void;
 }
 
 const useAppStore = create<AppState & AppActions>()(
@@ -22,7 +17,6 @@ const useAppStore = create<AppState & AppActions>()(
       activeLanguage: "en",
       currentUser: null,
       activeScheduledSession: null,
-      currentPsyCard: null,
 
       setCurrentUser: (user) =>
         set(() => ({
@@ -30,12 +24,11 @@ const useAppStore = create<AppState & AppActions>()(
             ? {
                 ...user,
                 isAdmin: user.userRole === ADMIN_ROLE,
-                hasSurvey: !!user.hasSurvey,
               }
             : null,
         })),
 
-      updateCurrentUser: (updates) =>
+      updateCurrentUser: (updates: any) =>
         set((state) => ({
           currentUser: state.currentUser
             ? {
@@ -47,20 +40,11 @@ const useAppStore = create<AppState & AppActions>()(
               }
             : null,
         })),
-
-      setActiveScheduledSession: (session) =>
-        set(() => ({ activeScheduledSession: session })),
-
-      setCurrentPsyCard(currentPsyCard) {
-        set(() => ({ currentPsyCard }));
-      },
     }),
     {
       name: "app-storage",
       storage: createJSONStorage(() => localStorage),
       partialize: (state) => ({
-        activeScheduledSession: state.activeScheduledSession,
-        currentPsyCard: state.currentPsyCard,
         currentUser: state.currentUser,
       }),
     },

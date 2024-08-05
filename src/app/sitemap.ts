@@ -5,7 +5,6 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
   // TODO: Find the proper way to handle locales!
   const routes = [
     "",
-    "/survey",
     "/login",
     "/register",
     "/account",

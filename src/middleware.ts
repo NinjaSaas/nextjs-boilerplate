@@ -5,7 +5,6 @@ const ROUTES = {
   user: ["/home", "/account", "/recommendation"],
   auth: ["/login", "/register"],
   admin: ["/admin"],
-  survey: ["/survey", "/survey/next"],
   default: {
     login: "/login",
     user: "/home",

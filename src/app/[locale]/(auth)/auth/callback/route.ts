@@ -35,7 +35,6 @@ export async function GET(request: Request) {
         // user session data
         await supabase.auth.updateUser({
           data: {
-            hasSurvey: exists.hasSurvey,
             userRole: exists.userRole,
             gender: exists.gender,
             education: exists.education,

@@ -21,7 +21,6 @@ export interface MainNavProps {
   className?: string;
   type?: "moderated" | "main" | "dashboard" | "basic";
   isLoading?: boolean;
-  hasSurvey?: boolean;
   user: AppUser;
   children?: React.ReactNode;
 }

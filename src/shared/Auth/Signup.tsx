@@ -47,7 +47,6 @@ function Auth({ heading, description, callbackUrl, type }: Props) {
 
           data: {
             username: data.result.username,
-            hasSurvey: false,
             userRole: USER_ROLE,
             image:
               "https://res.cloudinary.com/dqo2aggjs/image/upload/v1696596420/default-avatar_kqqse2.jpg",

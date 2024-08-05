@@ -224,11 +224,6 @@ button.gm-control-active.gm-fullscreen-control {
 }
 
 // LISTING PAGE DETAIL
-.SurveySection__wrap {
-  @apply relative flex min-h-[18rem] w-full flex-col space-y-3  overflow-hidden rounded border-b border-neutral-200 px-4 py-8 dark:border-neutral-700 sm:space-y-4 sm:rounded-xl sm:border-l  sm:border-r sm:border-t md:min-h-[22rem] xl:p-8;
-}
-
-// LISTING PAGE DETAIL
 .listingSectionSidebar__wrap {
   @apply flex w-full flex-col space-y-6 rounded-2xl border-b border-l border-r border-t border-neutral-200 p-2 pb-10 dark:border-neutral-700 sm:p-4 xl:space-y-7 xl:px-8 xl:py-6;
 }

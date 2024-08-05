@@ -27,7 +27,6 @@
     "db:push": "npx prisma db push",
     "db:seed": "npx prisma db seed",
     "db:studio": "dotenv -e .env  npx prisma studio",
-    "db:types": "npx --yes supabase gen types typescript --project-id 'lxtwuttzhbssoealxqsp' --schema public > ./src/lib/database.types.ts",
     "dev": "next dev",
     "dev:email": "email dev",
     "dev:run-email": "email dev --dir src/data/mail -p 3001",

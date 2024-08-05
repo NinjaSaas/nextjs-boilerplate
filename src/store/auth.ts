@@ -21,7 +21,6 @@ const useAuthStore = create<SessionStore>((set) => ({
         ? {
             ...user,
             isAdmin: user.userRole === ADMIN_ROLE, // Assuming 'admin' is a valid UserRole
-            hasSurvey: !!user.hasSurvey,
           }
         : null,
     })),

@@ -3,5 +3,5 @@ import { expect, test } from "@playwright/test";
 test("basic test", async ({ page }) => {
   await page.goto("/");
   const name = await page.innerText("h1");
-  expect(name).toBe("Elevate Your Well being with Online Therapy");
+  expect(name).toBe("Next.js Boilerplate");
 });
