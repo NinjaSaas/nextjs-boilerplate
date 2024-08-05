@@ -1,4 +1,3 @@
-
 import { accountSchema } from "@/data/valids/user";
 
 import { userProcedure } from "../../procedures";
@@ -16,7 +15,6 @@ export const userRouter = router({
     });
   }),
 
-
   updatePersonalProfile: userProcedure
     .input(accountSchema)
     .mutation(async ({ ctx, input }) => {
@@ -29,6 +27,4 @@ export const userRouter = router({
         data: updatedData,
       });
     }),
-
-
 });

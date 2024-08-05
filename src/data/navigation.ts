@@ -1,18 +1,16 @@
 import { PathName } from "@/types";
 import ncNanoId from "@/utils/ncNanoId";
 import {
-  HomeIcon,
+  BookmarkIcon,
+  ChatBubbleLeftEllipsisIcon,
   CodeBracketIcon,
+  CogIcon,
   CubeIcon,
   DocumentTextIcon,
-  CogIcon,
+  HomeIcon,
   QuestionMarkCircleIcon,
-  ChatBubbleLeftEllipsisIcon,
-  BookmarkIcon,
 } from "@heroicons/react/24/outline";
-import {
-  HomeIcon as SolidHomeIcon,
-} from "@heroicons/react/24/solid";
+import { HomeIcon as SolidHomeIcon } from "@heroicons/react/24/solid";
 
 import { CustomLink } from "@/data/types";
 import { NavItemType } from "@/shared/Navigation/NavigationItem";

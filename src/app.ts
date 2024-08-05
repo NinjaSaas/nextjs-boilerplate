@@ -36,13 +36,16 @@ export const contactConfig = {
 export const REPOSITORY_OWNER = "mouadlouhichi";
 export const REPOSITORY_NAME = "ninjasaas";
 export const REPOSITORY_URL = `https://github.com/${REPOSITORY_OWNER}/${REPOSITORY_NAME}`;
-export const baseUrl = process.env.NEXT_PUBLIC_APP_URL || "http://localhost:3000";
+export const baseUrl =
+  process.env.NEXT_PUBLIC_APP_URL || "http://localhost:3000";
 
-export const BASE_URL = process.env.NODE_ENV === "production" ? baseUrl : "http://localhost:3000";
+export const BASE_URL =
+  process.env.NODE_ENV === "production" ? baseUrl : "http://localhost:3000";
 export const BRAND_NAME = "ninjasaas";
 export const BRAND_TITLE = "Next.js Enterprise Boilerplate | ninjasaas";
 
-export const BRAND_DESCRIPTION = "ninjasaas: Next.js Boilerplate for rapid SaaS development. Start building your next big project today.";
+export const BRAND_DESCRIPTION =
+  "ninjasaas: Next.js Boilerplate for rapid SaaS development. Start building your next big project today.";
 
 export const OWNER_ROLE = UserRole.Owner;
 export const ADMIN_ROLE = UserRole.Admin;
@@ -67,7 +70,8 @@ export const siteConfig = {
   name: "ninjasaas",
   shortName: "ninjasaas",
   author: "mouadlouhichi",
-  description: "Jumpstart your SaaS project with ninjasaas - a feature-rich Next.js boilerplate for rapid development and scalable applications.",
+  description:
+    "Jumpstart your SaaS project with ninjasaas - a feature-rich Next.js boilerplate for rapid development and scalable applications.",
   company: {
     name: "ninjasaas",
     link: "https://www.ninjasaas.com",

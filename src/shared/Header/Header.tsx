@@ -21,11 +21,7 @@ const Header: FC<HeaderProps> = ({
     <header
       className={`nc-Header h-fit  sticky inset-x-0 top-0 z-50 w-full ${className}`}
     >
-      <MainNav
-        type={type}
-        isLoading={isLoading}
-        user={user}
-      />
+      <MainNav type={type} isLoading={isLoading} user={user} />
     </header>
   );
 };
