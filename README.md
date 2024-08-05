@@ -68,10 +68,10 @@ A robust and feature-rich Next.js boilerplate for quickly bootstrapping your web
 
 1. Use this template to create a new repository
 2. Clone your new repository:
-git clone https://github.com/ninjasaas/nextjs-boilerplate.git
-cd nextjs-boilerplate
+   git clone https://github.com/ninjasaas/nextjs-boilerplate.git
+   cd nextjs-boilerplate
 3. Install dependencies:
-pnpm install
+   pnpm install
 4. Set up environment variables (see [Environment Variables](#environment-variables) section)
 
 ## Environment Variables
@@ -133,7 +133,7 @@ For any queries, please reach out to:
 - **Author:** Mouad Louhichi
 - **Email:** contact.mindrested@gmail.com
 - **GitHub:** [https://github.com/ninjasaas/nextjs-boilerplate](https://github.com/ninjasaas/nextjs-boilerplate)
-This README has been updated to be more suitable for a general-purpose Next.js boilerplate template. Key changes include:
+  This README has been updated to be more suitable for a general-purpose Next.js boilerplate template. Key changes include:
 
 Updated the title and description to reflect a boilerplate template.
 Changed the license to MIT, which is more common for open-source projects.

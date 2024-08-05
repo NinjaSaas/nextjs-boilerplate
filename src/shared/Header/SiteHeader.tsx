@@ -1,7 +1,6 @@
 import React, { FC, use } from "react";
 import { getCurrentUser } from "@/lib/getCurrentUser";
-import { Link } from "@/lib/router-events";
-import { AppUser, Route } from "@/types";
+import { AppUser } from "@/types";
 
 import { getUserProfile } from "@/server/handlers/user/getUserProfile";
 import Button from "@/components/Button";
@@ -35,7 +34,7 @@ const SiteHeader: FC<SiteHeaderProps> = ({ type = "main" }) => {
 
   return (
     <>
-      <MainNav type={type} user={user as AppUser} >
+      <MainNav type={type} user={user as AppUser}>
         {renderUserLogin()}
       </MainNav>
 

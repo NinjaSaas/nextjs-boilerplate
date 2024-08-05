@@ -2,6 +2,7 @@
 // ?? Materials about @satisfies: https://youtu.be/49gHWuepxxE, https://youtu.be/G1RtAmI0-vc
 
 import type { ThemeConfig } from "@/types";
+import { UserRole } from "@prisma/client";
 import { Provider } from "@supabase/supabase-js";
 
 import { ContentSection, HeroHeader } from "@/server/config/appts";
@@ -9,7 +10,6 @@ import { networks } from "@/server/config/socials";
 
 import { FOOTER_NAVIGATION, NAVIGATION } from "./data/navigation";
 import { ImageSvgIcons } from "./images/icons";
-import { UserRole } from "@prisma/client";
 
 // ========================================================
 
@@ -51,8 +51,7 @@ export const baseUrl =
 export const BASE_URL =
   process.env.NODE_ENV === "production" ? baseUrl : "http://localhost:3000";
 export const BRAND_NAME = "ninjasaas";
-export const BRAND_TITLE =
-  "Your Mental Health Journey Starts Here | ninjasaas";
+export const BRAND_TITLE = "Your Mental Health Journey Starts Here | ninjasaas";
 
 export const BRAND_DESCRIPTION =
   "ninjasaas: Elevate Your Well being with Online Therapy, Progress Tracking, and Self-Care Resources. Start your journey to better mental health today.";

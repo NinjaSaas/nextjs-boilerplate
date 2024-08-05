@@ -69,9 +69,7 @@ const Card: React.FC<CardProps> = ({
 }) => (
   <div className={twMerge(cardConfig({ intent, size }), className)}>
     <BackgroundSection className={bgConfig({ intent })} />
-    <div
-      className=" relative flex flex-col lg:flex-row items-center"
-    >
+    <div className=" relative flex flex-col lg:flex-row items-center">
       <div className="flex-shrink-0 mb-4 lg:mb-0 lg:mr-2 w-full">
         {title && (
           <h2 className="font-display flex items-center font-medium text-primary-900 text-xl sm:text-2xl mt-2 sm:mt-4">

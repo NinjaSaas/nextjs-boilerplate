@@ -112,8 +112,6 @@ export function safeGet<T extends Record<string, any>>(
     .reduce((acc: any, curr: string) => (acc && acc[curr]) || null, obj);
 }
 
-
-
 /**
  ** Hex color to RGBA color
  */

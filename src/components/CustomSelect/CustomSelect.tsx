@@ -79,7 +79,6 @@ const CustomSelect: FC<CustomSelectProps> = forwardRef(
       onChange,
       value,
       defaultValue,
-      isSessionSelect = false,
       placeholder = "Select an option",
     },
     ref: any,
