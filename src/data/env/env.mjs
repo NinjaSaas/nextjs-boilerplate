@@ -54,7 +54,6 @@ export const env = createEnv({
     DATABASE_URL: z.string().url(),
 
     // AUTHENTICATION
-    SECRET_KEY: z.string().trim().min(1),
     GOOGLE_ID: optionalString,
     GOOGLE_SECRET: optionalString,
     LINKEDIN_ID: optionalString,
